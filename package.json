@@ -1,0 +1,41 @@
+{
+    "name": "exonerate",   
+    "version": "1.0.0",            
+    "description": "A custom validation decorator package for handling complex validation rules in NestJS DTOs.",  
+    "main": "dist/index.js",       
+    "types": "dist/index.d.ts",    
+    "scripts": {
+      "build": "tsc",              
+      "prepare": "npm run build",  
+      "test": "jest"               
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/sidratul-muntaher/Exonerate.git" 
+    },
+    "keywords": [
+      "nestjs",
+      "validation",
+      "class-validator",
+      "dto",
+      "typescript",
+      "decorator"
+    ],
+    "author": "Md Sidratul Muntaher Tibrow <smunathar@gmail.com>",  
+    "license": "MIT",              
+    "dependencies": {
+      "class-validator": "^0.13.2",   
+      "class-transformer": "^0.5.1"
+    },
+    "devDependencies": {
+      "typescript": "^4.9.4",      
+      "jest": "^28.1.1"            
+    },
+    "files": [
+      "dist"                       
+    ],
+    "engines": {
+      "node": ">=14.0.0"           
+    }
+  }
+  

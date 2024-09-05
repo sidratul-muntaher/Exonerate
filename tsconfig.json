@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "target": "ES6",                        // Specifies the target ECMAScript version
+      "module": "CommonJS",                    // Specifies the module code generation
+      "declaration": true,                     // Generates corresponding '.d.ts' files
+      "outDir": "./dist",                      // Redirects output structure to the directory
+      "strict": true,                          // Enables all strict type-checking options
+      "esModuleInterop": true,                 // Enables emit interoperability between CommonJS and ES Modules
+      "skipLibCheck": true,                    // Skips type checking of declaration files
+      "moduleResolution": "node",              // Determines how modules get resolved
+      "forceConsistentCasingInFileNames": true, // Disallows inconsistencies in casing
+      "sourceMap": true,                       // Generates corresponding '.map' files
+      "resolveJsonModule": true,               // Allows importing modules with a '.json' extension
+      "experimentalDecorators": true,          // Enables experimental support for decorators
+      "emitDecoratorMetadata": true            // Emits design-type metadata for decorators
+    },
+    "include": ["src/**/*.ts"],                // Includes all '.ts' files in the 'src' directory
+    "exclude": ["node_modules", "dist", "test"] // Excludes 'node_modules', 'dist', and 'test' directories
+  }
+  
