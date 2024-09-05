@@ -1,6 +1,6 @@
 {
   "name": "exonerate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A custom validation decorator package for NestJS DTOs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

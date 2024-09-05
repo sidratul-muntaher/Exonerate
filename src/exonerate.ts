@@ -18,11 +18,16 @@ import {
 } from 'class-validator';
 import { applyDecorators } from '@nestjs/common';
 import {Type} from "class-transformer";
+import { Injectable } from '@nestjs/common';
+import { getRepository } from 'typeorm';
+import {IsExist, IsUnique} from "./is-unique.validator";
 
 type ValidationRule =
     | 'required'
     | 'email'
     | 'string'
+    | 'unique'
+    | 'exist'
     | 'enum'
     | 'max'
     | 'min'
@@ -41,21 +46,23 @@ export function Exonerate({
                             validationOption,
                             classType,
                             arrayType,
-                            regexPattern
+                            regexPattern,
+                            entity,
                           }: {
   rules: string;
   enumType?: object;
   validationOption?: ValidationOptions;
   classType?: Function;
   arrayType?:Function | string  ;
-  regexPattern?:RegExp
+  regexPattern?:RegExp,
+  entity?: Function;
 }) {
   const decorators = rules
       .split('|')
       .map((rule) => {
         const [ruleName, arg] = rule.split(':');
 
-        switch (ruleName.trim() as ValidationRule) {
+        switch (ruleName as ValidationRule) {
           case 'required':
             return IsNotEmpty(validationOption);
           case 'optional':
@@ -70,10 +77,10 @@ export function Exonerate({
             return Matches(regexPattern, validationOption);
           case 'min':
             if (!arg) throw new Error(`Min length is required`);
-            return MinLength(parseInt(arg.trim()), validationOption);
+            return MinLength(parseInt(arg), validationOption);
           case 'max':
             if (!arg) throw new Error(`Max length is required`);
-            return MaxLength(parseInt(arg.trim()), validationOption);
+            return MaxLength(parseInt(arg), validationOption);
           case 'enum':
             if (!enumType)
               throw new Error('Enum type is required for enum validation');
@@ -83,12 +90,19 @@ export function Exonerate({
           case 'int':
             return IsInt(validationOption);
           case 'date':
-            if (!classType) {
-              throw new Error('Class type is required for date validation');
-            }
             return [Type(() => classType), IsDate(validationOption)];
           case 'uuid':
             return IsUUID('4', validationOption);
+          case 'unique':
+            if (!entity || !arg) {
+              throw new Error('Entity and field name are required for unique validation');
+            }
+            return IsUnique(entity, arg, validationOption);
+            case 'exist':
+            if (!entity || !arg) {
+              throw new Error('Entity and field name are required for unique validation');
+            }
+            return IsExist(entity, arg, {message:`${arg} must be exist in database`});
           case 'object':
             if (!classType)
               throw new Error('Class type is required for instance validation');
@@ -116,32 +130,3 @@ export function Exonerate({
 
   return applyDecorators(...decorators);
 }
-
-@ValidatorConstraint({ name: 'isInstance', async: false })
-export class IsInstanceConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments): boolean {
-    const [target] = args.constraints;
-    return value instanceof target;
-  }
-
-  defaultMessage(args: ValidationArguments): string {
-    const [target] = args.constraints;
-    return `The value must be an instance of ${target.name}`;
-  }
-}
-
-export function IsInstance(
-    target: Function,
-    validationOptions?: ValidationOptions,
-) {
-  return function (object: Object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [target],
-      validator: IsInstanceConstraint,
-    });
-  };
-}
-
