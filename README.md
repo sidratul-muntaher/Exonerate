@@ -72,63 +72,9 @@ address: AddressDto;
 
 }
 ```
-2. **Array Validation**
 
-Validate arrays of strings, numbers, or objects using the array rule and specifying the arrayType.
 
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|array', arrayType: 'string' })`
-
-`phoneNumbers: string[];`
-
-`@Exonerate({ rules: 'required|array', arrayType: Number })`
-
-`ages: number[];`
-
-`@Exonerate({ rules: 'required|array', arrayType: AddressDto })`
-
-`addresses: AddressDto[];`
-
-`}`
-
-3. **Nested Object Validation**
-
-To validate nested objects, use the object rule along with the classType option to specify the class of the nested object.
-
-`export class AddressDto {`
-
-`@Exonerate({ rules: 'required|string' })`
-
-`street: string;`
-
-`@Exonerate({ rules: 'required|string' })`
-
-`city: string;`
-
-`}`
-
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|object', classType: AddressDto })`
-
-`address: AddressDto;`
-
-`}`
-
-4. **Regex Pattern Validation**
-
-Use the pattern rule to apply regular expression validation to a field.
-
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|pattern', regexPattern: /^[A-Za-z0-9]+$/ })`
-
-`username: string;`
-
-`}`
-
-5. **Available Validation Rules**
+**Available Validation Rules**
 
 <mark>required</mark>: Ensures the field is not empty.
 
