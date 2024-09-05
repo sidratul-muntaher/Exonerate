@@ -55,7 +55,7 @@ export function Exonerate({
       .map((rule) => {
         const [ruleName, arg] = rule.split(':');
 
-        switch (ruleName as ValidationRule) {
+        switch (ruleName.trim() as ValidationRule) {
           case 'required':
             return IsNotEmpty(validationOption);
           case 'optional':
@@ -70,10 +70,10 @@ export function Exonerate({
             return Matches(regexPattern, validationOption);
           case 'min':
             if (!arg) throw new Error(`Min length is required`);
-            return MinLength(parseInt(arg), validationOption);
+            return MinLength(parseInt(arg.trim()), validationOption);
           case 'max':
             if (!arg) throw new Error(`Max length is required`);
-            return MaxLength(parseInt(arg), validationOption);
+            return MaxLength(parseInt(arg.trim()), validationOption);
           case 'enum':
             if (!enumType)
               throw new Error('Enum type is required for enum validation');
@@ -83,6 +83,9 @@ export function Exonerate({
           case 'int':
             return IsInt(validationOption);
           case 'date':
+            if (!classType) {
+              throw new Error('Class type is required for date validation');
+            }
             return [Type(() => classType), IsDate(validationOption)];
           case 'uuid':
             return IsUUID('4', validationOption);
