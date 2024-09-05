@@ -17,8 +17,8 @@
 ## Installation
 
 ```bash
-
 npm install exonerate
+```
 
 ### **Usage**
 
