@@ -5,13 +5,14 @@
 ## Features
 
 - Validate multiple rules in a single decorator.
-  
+
 - Supports data types like `string`, `number`, `array`, and `object`.
-  
+
 - Nested object validation.
-  
+
 - Regular expression (`regex`) validation.
-    
+
+- Custom decorators like `IsInstance` for custom instance validation.
 
 ## Installation
 
@@ -19,13 +20,13 @@
 
 npm install exonerate
 
-### **Usage**
+### **Usage**
 
 1. **Basic Setup**
 
 To use Exonerate, apply the @Exonerate decorator with your desired rules on your DTO properties.
 
-#### **Example**
+#### **Example**
 
 `import { Exonerate } from 'exonerate';`
 
@@ -157,6 +158,6 @@ Use the pattern rule to apply regular expression validation to a field.
 
 <mark>pattern</mark>: Validates a field against a regular expression.
 
-##### **Contribution**
+##### **Contribution**
 
 Feel free to contribute to the development of this package by opening issues or submitting pull requests.
