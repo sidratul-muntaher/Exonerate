@@ -17,8 +17,8 @@
 ## Installation
 
 ```bash
-
 npm install exonerate
+```
 
 ### **Usage**
 
@@ -27,108 +27,54 @@ npm install exonerate
 To use Exonerate, apply the @Exonerate decorator with your desired rules on your DTO properties.
 
 #### **Example**
+```bash
+import { Exonerate } from 'exonerate';
 
-`import { Exonerate } from 'exonerate';`
+export class CreateUserDto {
 
-`export class CreateUserDto {`
+@Exonerate({ rules: 'required|string|max:20|min:4' })
 
-`@Exonerate({ rules: 'required|string|max:20|min:4' })`
+name: string;
 
-`name: string;`
+@Exonerate({ rules: 'required|email' })
 
-`@Exonerate({ rules: 'required|email' })`
+email: string;
 
-`email: string;`
+@Exonerate({
 
-`@Exonerate({`
+rules: 'required|max:20|min:8|pattern',
 
-`rules: 'required|max:20|min:8|pattern',`
+regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
-`regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/`
+})
 
-`})`
+password: string;
 
-`password: string;`
+@Exonerate({ rules: 'required|array', arrayType: 'string' })
 
-`@Exonerate({ rules: 'required|array', arrayType: 'string' })`
+phone: string[];
 
-`phone: string[];`
+@Exonerate({ rules: 'optional|date', classType: Date })
 
-`@Exonerate({ rules: 'optional|date', classType: Date })`
+dob: Date;
 
-`dob: Date;`
+@Exonerate({ rules: 'required|enum', enumType: ROLE })
 
-`@Exonerate({ rules: 'required|enum', enumType: ROLE })`
+role: string;
 
-`role: string;`
+@Exonerate({ rules: 'optional|array', arrayType: AddressDto })
 
-`@Exonerate({ rules: 'optional|array', arrayType: AddressDto })`
+addresses: AddressDto[];
 
-`addresses: AddressDto[];`
+@Exonerate({ rules: 'optional|object', classType: AddressDto })
 
-`@Exonerate({ rules: 'optional|object', classType: AddressDto })`
+address: AddressDto;
 
-`address: AddressDto;`
+}
+```
 
-`}`
 
-2. **Array Validation**
-
-Validate arrays of strings, numbers, or objects using the array rule and specifying the arrayType.
-
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|array', arrayType: 'string' })`
-
-`phoneNumbers: string[];`
-
-`@Exonerate({ rules: 'required|array', arrayType: Number })`
-
-`ages: number[];`
-
-`@Exonerate({ rules: 'required|array', arrayType: AddressDto })`
-
-`addresses: AddressDto[];`
-
-`}`
-
-3. **Nested Object Validation**
-
-To validate nested objects, use the object rule along with the classType option to specify the class of the nested object.
-
-`export class AddressDto {`
-
-`@Exonerate({ rules: 'required|string' })`
-
-`street: string;`
-
-`@Exonerate({ rules: 'required|string' })`
-
-`city: string;`
-
-`}`
-
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|object', classType: AddressDto })`
-
-`address: AddressDto;`
-
-`}`
-
-4. **Regex Pattern Validation**
-
-Use the pattern rule to apply regular expression validation to a field.
-
-`export class CreateUserDto {`
-
-`@Exonerate({ rules: 'required|pattern', regexPattern: /^[A-Za-z0-9]+$/ })`
-
-`username: string;`
-
-`}`
-
-5. **Available Validation Rules**
+**Available Validation Rules**
 
 <mark>required</mark>: Ensures the field is not empty.
 
