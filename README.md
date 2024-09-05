@@ -27,51 +27,51 @@ npm install exonerate
 To use Exonerate, apply the @Exonerate decorator with your desired rules on your DTO properties.
 
 #### **Example**
+```bash
+import { Exonerate } from 'exonerate';
 
-`import { Exonerate } from 'exonerate';`
+export class CreateUserDto {
 
-`export class CreateUserDto {`
+@Exonerate({ rules: 'required|string|max:20|min:4' })
 
-`@Exonerate({ rules: 'required|string|max:20|min:4' })`
+name: string;
 
-`name: string;`
+@Exonerate({ rules: 'required|email' })
 
-`@Exonerate({ rules: 'required|email' })`
+email: string;
 
-`email: string;`
+@Exonerate({
 
-`@Exonerate({`
+rules: 'required|max:20|min:8|pattern',
 
-`rules: 'required|max:20|min:8|pattern',`
+regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
-`regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/`
+})
 
-`})`
+password: string;
 
-`password: string;`
+@Exonerate({ rules: 'required|array', arrayType: 'string' })
 
-`@Exonerate({ rules: 'required|array', arrayType: 'string' })`
+phone: string[];
 
-`phone: string[];`
+@Exonerate({ rules: 'optional|date', classType: Date })
 
-`@Exonerate({ rules: 'optional|date', classType: Date })`
+dob: Date;
 
-`dob: Date;`
+@Exonerate({ rules: 'required|enum', enumType: ROLE })
 
-`@Exonerate({ rules: 'required|enum', enumType: ROLE })`
+role: string;
 
-`role: string;`
+@Exonerate({ rules: 'optional|array', arrayType: AddressDto })
 
-`@Exonerate({ rules: 'optional|array', arrayType: AddressDto })`
+addresses: AddressDto[];
 
-`addresses: AddressDto[];`
+@Exonerate({ rules: 'optional|object', classType: AddressDto })
 
-`@Exonerate({ rules: 'optional|object', classType: AddressDto })`
+address: AddressDto;
 
-`address: AddressDto;`
-
-`}`
-
+}
+```
 2. **Array Validation**
 
 Validate arrays of strings, numbers, or objects using the array rule and specifying the arrayType.
