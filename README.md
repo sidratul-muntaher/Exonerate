@@ -25,12 +25,15 @@ npm install exonerate
 1. **Basic Setup**
 
 To use Exonerate, apply the @Exonerate decorator with your desired rules on your DTO properties.
+And add this line in main.ts file 
+```bash
+  app.useGlobalPipes(new ValidationPipe());
+```
 
 ### **.env**
 
 if you want to use `unique` and `exist` keyword in @Exonerate you must add these data to your 
 `.env` file
-
 ```bash
     DB_TYPE=postgres
     DB_HOST=127.0.0.1
@@ -39,6 +42,15 @@ if you want to use `unique` and `exist` keyword in @Exonerate you must add these
     DB_PASSWORD=
     DB_DATABASE=
 ```
+add this code inside `appmodule` file inside `imports:[]` 
+```bash
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+    })
+```
+
+
 
 #### **Example**
 ```bash
