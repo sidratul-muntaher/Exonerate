@@ -41,6 +41,7 @@ if you want to use `unique` and `exist` keyword in @Exonerate you must add these
     DB_USERNAME=
     DB_PASSWORD=
     DB_DATABASE=
+    ENTITIES_PATH="dist/**/**/*.entity{.ts,.js}" # path should be according to your project          otherwise it will show metadata not found.
 ```
 add this code inside `appmodule` file inside `imports:[]` 
 ```bash

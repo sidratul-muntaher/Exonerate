@@ -2,8 +2,7 @@ import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments,
 import { Injectable } from '@nestjs/common';
 import {DataSource, Repository} from 'typeorm';
  import * as process from "node:process";
-import {join} from "path";
-
+import * as dotenv from 'dotenv';
 
 @ValidatorConstraint({ async: true })
 @Injectable()
@@ -16,9 +15,10 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
 
     async validate(value: any, args: ValidationArguments): Promise<boolean> {
         const [entityClass, property, isUnique] = args.constraints;
-    
+        dotenv.config();
         
         if (!this.dataSource) {
+            if(isUnique){
             this.dataSource = await new DataSource({
                 type: process.env.DB_TYPE === 'mysql' ? 'mysql' : 'postgres',
                 host: process.env.DB_HOST,
@@ -26,10 +26,10 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
-                entities: ["dist/**/**/*.entity{.ts,.js}"],
+                entities: [process.env.ENTITIES_PATH || ""],
                 synchronize: true,
             }).initialize();
-    
+        }
             if (!this.dataSource) {
                 throw new Error('DataSource is not initialized');
             }
