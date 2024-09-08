@@ -19,6 +19,15 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
         
         if (!this.dataSource) {
             if(isUnique){
+                console.log("entities -> ", process.env.ENTITIES_PATH||"");
+                console.log("database -> ", process.env.DB_DATABASE);
+                console.log("username -> ", process.env.DB_USERNAME);
+                console.log("password -> ", process.env.DB_PASSWORD);
+                console.log("port -> ", Number(process.env.DB_PORT));
+                console.log("host -> ", process.env.DB_HOST );
+                console.log("type -> ", process.env.DB_TYPE === 'mysql' ? 'mysql' : 'postgres');
+
+                
             this.dataSource = await new DataSource({
                 type: process.env.DB_TYPE === 'mysql' ? 'mysql' : 'postgres',
                 host: process.env.DB_HOST,
@@ -26,7 +35,7 @@ export class IsUniqueConstraint implements ValidatorConstraintInterface {
                 username: process.env.DB_USERNAME,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
-                entities: [process.env.ENTITIES_PATH || ""],
+                entities: [process.env.ENTITIES_PATH||""],
                 synchronize: true,
             }).initialize();
         }
