@@ -1,6 +1,6 @@
 {
   "name": "exonerate",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "A custom validation decorator package for NestJS DTOs.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,8 @@
   "dependencies": {
     "@nestjs/common": "^10.4.1",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.13.2"
+    "class-validator": "^0.13.2",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "jest": "^28.1.1",

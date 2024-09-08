@@ -26,49 +26,51 @@ npm install exonerate
 
 To use Exonerate, apply the @Exonerate decorator with your desired rules on your DTO properties.
 
+### **.env**
+
+if you want to use `unique` and `exist` keyword in @Exonerate you must add these data to your 
+`.env` file
+
+```bash
+    DB_TYPE=postgres
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_USERNAME=
+    DB_PASSWORD=
+    DB_DATABASE=
+```
+
 #### **Example**
 ```bash
 import { Exonerate } from 'exonerate';
 
 export class CreateUserDto {
+    @Exonerate({ rules: 'required|string|max:20|min:4|exist:name', entity:User })
+    name: string;
 
-@Exonerate({ rules: 'required|string|max:20|min:4' })
+    @Exonerate({ rules: 'required|email|unique:email', entity:User })
+    email: string;
 
-name: string;
+    @Exonerate({
+    rules: 'required|max:20|min:8|pattern',
+    regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
+    })
+    password: string;
 
-@Exonerate({ rules: 'required|email' })
+    @Exonerate({ rules: 'required|array', arrayType: 'string' })
+    phone: string[];
 
-email: string;
+    @Exonerate({ rules: 'optional|date', classType: Date })
+    dob: Date;
 
-@Exonerate({
+    @Exonerate({ rules: 'required|enum', enumType: ROLE })
+    role: string;
 
-rules: 'required|max:20|min:8|pattern',
+    @Exonerate({ rules: 'optional|array', arrayType: AddressDto })
+    addresses: AddressDto[];
 
-regexPattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
-
-})
-
-password: string;
-
-@Exonerate({ rules: 'required|array', arrayType: 'string' })
-
-phone: string[];
-
-@Exonerate({ rules: 'optional|date', classType: Date })
-
-dob: Date;
-
-@Exonerate({ rules: 'required|enum', enumType: ROLE })
-
-role: string;
-
-@Exonerate({ rules: 'optional|array', arrayType: AddressDto })
-
-addresses: AddressDto[];
-
-@Exonerate({ rules: 'optional|object', classType: AddressDto })
-
-address: AddressDto;
+    @Exonerate({ rules: 'optional|object', classType: AddressDto })
+    address: AddressDto;
 
 }
 ```

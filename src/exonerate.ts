@@ -10,16 +10,10 @@ import {
   IsUUID,
   MaxLength,
   MinLength,
-  ValidationOptions,
-  registerDecorator,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
-  ValidationArguments, ValidateNested, IsArray, IsNumber, Matches,
+  ValidationOptions,ValidateNested, IsArray, IsNumber, Matches,
 } from 'class-validator';
 import { applyDecorators } from '@nestjs/common';
 import {Type} from "class-transformer";
-import { Injectable } from '@nestjs/common';
-import { getRepository } from 'typeorm';
 import {IsExist, IsUnique} from "./is-unique.validator";
 
 type ValidationRule =
@@ -90,7 +84,7 @@ export function Exonerate({
           case 'int':
             return IsInt(validationOption);
           case 'date':
-            return [Type(() => classType), IsDate(validationOption)];
+            return [Type(() => Date), IsDate(validationOption)];
           case 'uuid':
             return IsUUID('4', validationOption);
           case 'unique':
@@ -128,5 +122,5 @@ export function Exonerate({
       .flat()
       .filter(Boolean);
 
-  return applyDecorators(...decorators);
+  return applyDecorators(...(decorators) as any[]);
 }
