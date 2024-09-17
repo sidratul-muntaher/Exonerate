@@ -1,7 +1,7 @@
 {
   "name": "exonerate",
-  "version": "1.0.9",
-  "description": "A custom validation decorator package for NestJS DTOs.",
+  "version": "1.1.0",
+  "description": "Exonerate is a versatile validation decorator for NestJS that combines validation and automatic Swagger documentation. It supports various data types, nested objects, arrays, regex patterns, and custom validations such as unique and exist for database entities. With Exonerate, you can define multiple validation rules in a single place, simplifying DTOs and ensuring cleaner code. It eliminates the need for separate @ApiProperty decorators. Ideal for robust API development with streamlined validation and documentation.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -24,6 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@nestjs/common": "^10.4.1",
+    "@nestjs/swagger": "^7.4.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "typeorm": "^0.3.20"
